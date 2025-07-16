@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <div class="settings-container">
+        <h1>Account Settings</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <legend>User Info</legend>
+                {{ user_form.as_p }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Profile Picture</legend>
+                {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar.url }}" alt="Avatar" width="100">
+                {% endif %}
+                {{ profile_form.as_p }}
+            </fieldset>
+
+            <button type="submit">Update</button>
+        </form>
+
+        <div class="settings-links">
+            <a href="{% url 'password_change' %}">🔒 Change Password</a>
+            <a href="{% url 'profile_view' %}">👤 Back to Profile</a>
+        </div>
+    </div>
+</body>
+</html>

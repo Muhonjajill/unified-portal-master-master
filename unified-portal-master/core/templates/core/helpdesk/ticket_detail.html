@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/ticket_detail.css' %}">
+{% endblock %}
+
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+
+{% block content %}
+<div class="ticket-detail-container">
+  <div class="ticket-card">
+    <h2>🎟️ Ticket #{{ ticket.id }} - {{ ticket.title }}</h2>
+
+    <div class="ticket-info">
+      <div><strong>Status:</strong> <span class="badge badge-{{ ticket.status }}">{{ ticket.get_status_display }}</span></div>
+      <div><strong>Priority:</strong> <span class="badge badge-{{ ticket.priority }}">{{ ticket.get_priority_display }}</span></div>
+      <div><strong>BRTS Unit:</strong> {{ ticket.brts_unit }}</div>
+      <div><strong>Terminal:</strong> {{ ticket.terminal }}</div>
+      <div><strong>Problem Category:</strong> {{ ticket.problem_category }}</div>
+      <div><strong>Description:</strong><br><p class="description">{{ ticket.description }}</p></div>
+      <div><strong>Created By:</strong> {{ ticket.created_by }}</div>
+      <div><strong>Created At:</strong> {{ ticket.created_at|date:"Y-m-d H:i" }}</div>
+    </div>
+    
+    {% if is_admin or is_editor %}
+    <form method="post" action="{% url 'resolve_ticket' ticket.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Resolve Ticket</button>
+    </form>
+    {% elif can_resolve %}
+        <form method="post" action="{% url 'resolve_ticket' ticket.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Resolve Ticket</button>
+        </form>
+    {% else %}
+        <span class="badge badge-success">Resolved</span>
+    {% endif %}
+
+    <a href="{% url 'ticketing_dashboard' %}" class="btn btn-back">← Back to Tickets</a>
+  </div>
+</div>
+{% endblock %}

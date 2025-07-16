@@ -1,0 +1,55 @@
+{% extends "files_base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/file_management_dashboard.css' %}">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="section-title">File Types</h2>
+<div class="file-types-grid">
+  {% for type in file_types %}
+  <div class="file-type-card">
+    <i class="{{type.icon}} main-icon"></i>
+    <h3>{{type.type}}</h3>
+    <p class="count">{{ type.count }} file{{ type.count|pluralize }}</p>
+    <i class="fas fa-folder folder-icon-overlay"></i>
+  </div>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Categories</h2>
+<div class="categories-grid">
+  {% for category in categories %}
+  <div class="category-card">
+    <div class="category-header">
+      <i class="fas fa-folder icon"></i>
+      <h4>{{ category.name }}</h4>
+    </div>
+    <p class="file-count">{{ category.file_count }} file{{ category.file_count|pluralize }}</p>
+    <a href="{% url 'file_list_by_category' category.name %}" class="view-files-link">
+      View Files <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+  {% empty %}
+  <p>No categories available</p>
+  {% endfor %}
+</div>
+
+<h2 class="section-title">Recently Uploaded</h2>
+<div class="recent-files-list">
+  {% for file in recent_files %}
+  <div class="recent-file-card">
+    <i class="fas fa-file-alt file-icon"></i>
+    <div class="file-info">
+      <strong>{{ file.title }}</strong><br>
+      <small>{{ file.upload_date|date:"M d, Y H:i" }}</small><br>
+      <a href="{{ file.file.url }}" download>⬇ Download</a>
+    </div>
+  </div>
+  {% empty %}
+  <p>No recent files found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

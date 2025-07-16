@@ -1,0 +1,65 @@
+{% extends "files_base.html" %}
+{% load static %}
+
+{% block title %}Manage File Categories{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/manage_file_categories.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="category-container">
+  <h2>📂 Manage File Categories</h2>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="alert alert-success">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="card add-category-card">
+    <form method="post" class="category-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="create">
+      <input type="text" name="name" placeholder="New Category Name" required>
+      <button type="submit" class="btn btn-create">➕ Add Category</button>
+    </form>
+  </div>
+
+  <div class="card table-card">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cat in categories %}
+        <tr>
+          <td>
+            <form method="post" class="inline-form">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="update">
+              <input type="hidden" name="category_id" value="{{ cat.id }}">
+              <input type="text" name="new_name" value="{{ cat.name }}" required>
+              <button type="submit" class="btn btn-update">✏️</button>
+            </form>
+          </td>
+          <td>
+            <form method="post" class="inline-form">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="delete">
+              <input type="hidden" name="category_id" value="{{ cat.id }}">
+              <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this category?')">🗑️</button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

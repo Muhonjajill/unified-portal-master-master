@@ -1,0 +1,26 @@
+<!-- accounts/profile_content.html -->
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}" />
+{% endblock %}
+
+<div class="profile-container">
+    <h1>{{ user.get_full_name|default:user.username }}'s Profile</h1>
+
+    <div class="profile-details">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Date joined:</strong> {{ user.date_joined|date:"M d, Y" }}</p>
+        {% if user.profile.avatar %}
+            <div style="text-align: center;">
+                <img src="{{ user.profile.avatar.url }}" alt="Avatar" width="120" style="border-radius: 8px; margin-top: 1rem;">
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="profile-links">
+        <a href="{% url 'settings' %}">⚙️ Update Settings</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
+    </div>
+</div>

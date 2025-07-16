@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Customers{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/customers.css' %}">
+<div class="page-container">
+  <h2><i class="fas fa-users"></i> Customers</h2>
+  <p>Manage customer records here.</p>
+
+  <!-- Upload Form -->
+  <div class="page-header-actions">
+    <form method="POST" enctype="multipart/form-data" class="upload-form">
+      {% csrf_token %}
+      <label for="file">Upload Customer CSV:</label>
+      <input type="file" name="file" accept=".csv" required>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    <a href="{% url 'create_customer' %}" class="btn btn-danger">New Customer</a>
+  </div>
+
+  <!-- Table of customers -->
+  <div class="table-responsive">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="alert alert-success">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <table class="ticket-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Customer Name</th>
+          <th>Actions</th> 
+        </tr>
+      </thead>
+      <tbody>
+      {% for customer in customers %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ customer.name }}</td>
+        <td>
+          <a href="{% url 'delete_customer' customer.id %}" class="view-link" onclick="return confirm('Are you sure you want to delete this customer?');">Remove</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="3">No customers found.</td></tr>
+      {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

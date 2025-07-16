@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/version_controls.css' %}">
+{% endblock %}
+
+{% block title %}Version Controls{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+  <h2><i class="fas fa-code-branch"></i> Version Controls</h2>
+  <p>Manage and review system versions here.</p>
+
+  <form method="post" action="{% url 'version_controls' %}" class="version-form">
+    {% csrf_token %}
+    <div class="form-section">
+      <div class="form-group">
+        {{ form.terminal.label_tag }}{{ form.terminal }}
+      </div>
+      <div class="form-group">
+        {{ form.manufacturer.label_tag }}{{ form.manufacturer }}
+      </div>
+      <div class="form-group">
+        {{ form.template.label_tag }}{{ form.template }}
+      </div>
+      <div class="form-group">
+        {{ form.firmware.label_tag }}{{ form.firmware }}
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" name="create" class="btn btn-danger">Create</button>
+      <button type="submit" name="create_another" class="btn btn-secondary">Create & create another</button>
+      <a href="{% url 'version_controls' %}" class="btn btn-outline-light">Cancel</a>
+    </div>
+  </form>
+
+
+  <div class="table-responsive">
+    <table class="version-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Terminal</th>
+          <th>Manufacturer</th>
+          <th>Template</th>
+          <th>Firmware</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in versions %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ item.terminal }}</td>
+          <td>{{ item.manufacturer }}</td>
+          <td>{{ item.template }}</td>
+          <td>{{ item.firmware }}</td>
+          <td>{{ item.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No version entries found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

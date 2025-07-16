@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/file_management_dashboard.css' %}">
+
+<div class="sidebar" id="sidebar">
+  <img src="{% static 'icons/logo.png' %}" class="sidebar-logo" alt="Blue River Logo">
+  <div class="sidebar-header">Dashboard</div>
+  <ul>
+    <li><a href="{% url 'dashboard' %}"><i class="fas fa-th-large icon"></i> Dashboard</a></li>
+    <li><a href="{% url 'file_list' %}"><i class="fas fa-folder icon"></i> Files</a></li>
+    <li><a href="{% url 'file_list' %}?sort=recent"><i class="fas fa-history icon"></i> Recent</a></li>
+    <li><a href="{% url 'user_list' %}"><i class="fas fa-users icon"></i> Users</a></li>
+  </ul>
+</div>
+<script src="{% static 'js/files_navbar.js' %}"></script>

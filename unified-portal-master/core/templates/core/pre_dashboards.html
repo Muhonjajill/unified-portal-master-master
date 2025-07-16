@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-Dashboards</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pre_dashboards.css' %}">
+</head>
+<body>
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <header>
+        <img src="{% static 'icons/logo.png'%}" width="300px" height="200px">
+        <h1>Welcome, {{ user.get_full_name|default:user.username }}</h1>
+    </header>
+
+    <main class="cards-container">
+        <div class="card" id="fileManagementCard">
+            <span class="card-icon">&#128447;&#65039;</span> 
+            <h2 class="card-title">File Management System</h2>
+            <p class="card-description">Upload, access, categorize, and share files.</p>
+        </div>
+
+        <div class="card" id="ticketingSystemCard">
+            <span class="card-icon">&#127915;</span> 
+            <h2 class="card-title">Ticketing System</h2>
+            <p class="card-description">Raise issues, track support tickets, communicate with support.</p>
+        </div>
+    </main>
+
+    <script>
+        const ticketingURL = "{% url 'ticketing_dashboard' %}";
+        const filemanagementURL = "{% url 'file_management_dashboard' %}";
+    </script>
+    <script src="{% static 'js/pre_dashboards.js'%}"></script>
+</body>
+</html>
+
