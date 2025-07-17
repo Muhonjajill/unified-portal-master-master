@@ -68,6 +68,10 @@ urlpatterns = [
     path('tickets/', views.tickets, name='tickets'),
     #path('dashboard-data/', views.dashboard_data_json, name='dashboard_data'),
 
+
+    path('comments/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),
+    path('comments/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
+
     path('create_ticket/', views.create_ticket, name= 'create_ticket'),
     path('tickets/<int:ticket_id>/', views.ticket_detail, name='ticket_detail'), 
     path('ticket/<int:ticket_id>/resolve/', views.resolve_ticket_view, name='resolve_ticket'),

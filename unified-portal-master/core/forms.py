@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import File, ProblemCategory, Ticket
+from .models import File, ProblemCategory, Ticket, TicketComment
 from django.contrib.auth.models import User
 from .models import Profile, Terminal, VersionControl
 
@@ -74,7 +74,7 @@ class ProfileUpdateForm(forms.ModelForm):
 class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        exclude = ['created_by', 'assigned_to', 'created_at', 'updated_at']
+        exclude = ['created_by', 'assigned_to', 'created_at', 'updated_at', ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
@@ -84,6 +84,7 @@ class TicketForm(forms.ModelForm):
             'priority': forms.Select(attrs={'class': 'form-control'}),
             'status': forms.Select(attrs={'class': 'form-control'}),
             'responsible': forms.Select(attrs={'class': 'form-control'}),
+            'comment_summary': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Optional comments...'}),
         }
 
 
@@ -126,4 +127,24 @@ class VersionControlForm(forms.ModelForm):
             'manufacturer': forms.TextInput(attrs={'class': 'form-control'}),
             'template': forms.TextInput(attrs={'class': 'form-control'}),
             'firmware': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+class TicketCommentForm(forms.ModelForm):
+    class Meta:
+        model = TicketComment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Add a comment...', 'class': 'form-control'})
+        }
+
+class TicketEditForm(forms.ModelForm):
+    class Meta:
+        model = Ticket
+        fields = ['status', 'priority', 'comment_summary', 'problem_category', 'description']
+        widgets = {
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'priority': forms.Select(attrs={'class': 'form-control'}),
+            'comment_summary': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'problem_category': forms.Select(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
         }

@@ -66,6 +66,11 @@
                     {{ form.responsible }}
                 </div>
                 <div class="form-group">
+                    <label for="comment_summary">Comments</label>
+                    {{ form.comment_summary }}
+                </div>
+
+                <div class="form-group">
                     <label for="{{ form.created_at.id_for_label }}">Created At</label>
                     {{ form.created_at }}
                 </div>

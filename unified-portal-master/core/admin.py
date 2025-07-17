@@ -1,6 +1,6 @@
 # core/admin.py
 from django.contrib import admin
-from .models import FileCategory, File, FileAccessLog, Ticket, TicketComment
+from .models import FileCategory, File, FileAccessLog, Ticket #TicketComment
 
 
 @admin.register(FileCategory)
@@ -27,7 +27,7 @@ class TicketAdmin(admin.ModelAdmin):
     list_filter = ('status', 'priority')
     search_fields = ('title', 'description')
 
-@admin.register(TicketComment)
+"""@admin.register(TicketComment)
 class TicketCommentAdmin(admin.ModelAdmin):
     list_display = ('ticket', 'commented_by', 'created_at')
-    list_filter = ('created_at',)
+    list_filter = ('created_at',)"""

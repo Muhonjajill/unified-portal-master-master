@@ -62,6 +62,33 @@
 .badge-high { background-color: #dc3545; color: white; }
 .badge-urgent { background-color: #bd2130; color: white; }
 
+ 
+
+#ticket-edit-form {
+  margin-top: 20px;
+}
+
+#edit-ticket-btn {
+  margin-top: 20px;
+}
+
+
+
+/*save changes button*/
+.custom-submit-btn {
+    background-color: #add8e6; /* Light blue */
+    color: #000; /* Black text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-submit-btn:hover {
+    background-color: #87ceeb; /* Slightly darker light blue on hover */
+}
+
 /* Back button */
 .btn-back {
   display: inline-block;
@@ -90,6 +117,9 @@
   }
 }
 
+
+
+
 @media (max-width: 480px) {
   .ticket-card h2 {
     font-size: 1.4em;
@@ -104,3 +134,8 @@
     text-align: center;
   }
 }
+
+
+
+
+

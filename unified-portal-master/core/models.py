@@ -161,6 +161,7 @@ class Ticket(models.Model):
 
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
+    comment_summary = models.TextField(blank=True, null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -175,10 +176,12 @@ class Ticket(models.Model):
         return self.title
 
 class TicketComment(models.Model):
-    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='comments')
-    commented_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    comment = models.TextField()
+    ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name='ticket_comments')
+    #commented_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    content = models.TextField()
+    #comment = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Comment by {self.commented_by} on {self.ticket}"
+        return f"{self.ticket.id}" - {self.created_by}   # commented out on admins.py
